@@ -1,17 +1,11 @@
 function plotTabular(){
     let q=document.querySelector("canvas");
     let w=q.getContext("2d");
-    let gridSize=50;
-    //console.log(q.offsetWidth);
-    //console.log(q.offsetHeight);
-    //console.log(w.canvas.width);
-    //console.log(w.canvas.height);
-    // w.fillStyle = 'green';
-    // w.fillRect(0,0,400,400);
+    let row = 5;
+    let col = 4;
     let canvasWidth=w.canvas.width;
     let canvasHeight=w.canvas.height;
-    let row=Math.floor(canvasWidth/gridSize);
-    let col = Math.floor(canvasWidth / gridSize);
+    let gridSize = Math.floor(canvasWidth/col);
     for(let i=0;i<row;i++)
     {
         w.beginPath();
@@ -29,4 +23,29 @@ function plotTabular(){
         w.stroke();
     }
 }
-        
+
+let x = 0;
+let r =  Math.floor(Math.random()* 4);
+function plotBox()
+{   
+    
+    let c=document.getElementById('canvas');
+    //获取绘画环境
+    let cv=c.getContext('2d');
+    cv.clearRect(0, 0, canvas.width, canvas.height)
+
+    //指定填充颜色
+    cv.fillStyle= "red";
+    
+    //绘制一个矩形cv.fillRect(x,y,width,height)
+    cv.fillRect(r*50,x,50,50);
+    x = x + 50;
+    // 边界控制
+    if (x>canvas.height-50)
+        x = canvas.height-50;
+}
+
+function go(){
+    // setinterval(plotTabular,1000);
+    setInterval(plotBox, 1000);
+}
