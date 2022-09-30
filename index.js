@@ -2,20 +2,18 @@ var w = 260;
 var h = 400;
 var score = 0;
 var div = document.getElementById("score");
+var game = document.getElementById("game");
+var canvas = game.getContext("2d");
+game.width = w;
+game.height = h;
 
 function Rect(y, arr) {
     //每一个rect表示一行
     //y表示这一行的高度
     this.y = y;
-    //arr是一个数组，用于描述，四个小矩形，每一个的颜色
     //颜色：0表示白，2表示黑，1表示红，3表示灰，大于3也是灰
     this.arr = arr;
 }
-
-var game = document.getElementById("game");
-var canvas = game.getContext("2d");
-game.width = w;
-game.height = h;
 
 canvas.fillStyle = "#000000";
 //a里面放入6个Rect
@@ -38,19 +36,6 @@ function goGame() {
     for (var i = 0; i < a.length; i++) {
         a[i].y++;
         if (a[i].y > h) {
-            // for (var j = 0; j < a[i].arr.length; j++) {
-            //     if (a[i].arr[j] == 2) {
-            //         //gameover
-            //         isrunning = false;
-            //         clearInterval(running);
-            //         a[i].arr[j] = 1;
-            //         //回退
-            //         // backing = setInterval("goBack();", 10);
-            //         // return;
-            //     }
-
-            // }
-
             //出去了，就再利用
             for (var j = 0; j < a[i].arr.length; j++) {
                 a[i].arr[j] = 0;
@@ -63,13 +48,8 @@ function goGame() {
             // 所以不一定最下面的一行是a[5]
             // 而是a[5]到最下面了，就修改y让他到上面去
         }
-
-
     }
-
-
 }
-//绘制的方法
 
 function drawGame() {
     for (var i = 0; i < a.length; i++) {
@@ -96,16 +76,10 @@ function drawGame() {
             //描边
             canvas.strokeStyle = "#666666";
             canvas.strokeRect(j * (w / 4), a[i].y, (w / 4), (h / 4));
-
-
         }
-
-
     }
     canvas.strokeStyle = "#000000";
     canvas.strokeRect(0, 0, w, h);
-
-
 }
 
 
@@ -168,14 +142,6 @@ window.onkeydown = function(e){ //event可以简写成 e
            istiming = false;
        }
        if (isrunning) {
-        //    event = event || window.event;
-        //    var x = event.clientX - 200;
-        //    var y = event.clientY - 100;
-           // var bbox =game.getboundingclientrect();
-           // x=x- bbox.left *(game.width / bbox.width);
-           // y=y - bbox.top * (game.height / bbox.height);
-           //判断点击的是哪个矩形
-           // for (var i = 0; i < a.length; i++) {
            let i = down();
                if (0<=m && m<=3) {
                    //点击在sdjk其中之一
@@ -199,66 +165,63 @@ window.onkeydown = function(e){ //event可以简写成 e
    
            }
 }
-function onGamedown(event) {
-    // 计时
-    if (istiming)
-    {
-        start();
-        istiming = false;
-    }
-    if (isrunning) {
-        event = event || window.event;
-        var x = event.clientX - 200;
-        var y = event.clientY - 100;
-        // var bbox =game.getboundingclientrect();
-        // x=x- bbox.left *(game.width / bbox.width);
-        // y=y - bbox.top * (game.height / bbox.height);
-        //判断点击的是哪个矩形
-        // for (var i = 0; i < a.length; i++) {
-        let i = down();
-            if (a[i].y < y && a[i].y + h / 4 > y) {
-                //点击在了第i行
-                var j = Math.floor(x / (w / 4));
-                //将上面取整的数加1
-                a[i].arr[j]++;
-                if (a[i].arr[j] == 1) {
-                    drawGame();
-                    clearInterval(running);
-                    isrunning = false;
-                    clearInterval(times);
-                    boxObj.innerHTML = num;
-                    alert("点错啦！");
-                    return;
-                } else if (a[i].arr[j] == 3) {
-                    score++;
-                    a[i].arr[j] = 2;    // 关键代码！不然一轮完就变会=灰了
-                    move();
-                    drawGame();
-                    div.innerHTML = "得分：" + score;   
-                }
-            }
 
-        }
-    }
+// 下面这段代码可以实现鼠标操作，但是暂时只能在canvas在最左边的时候可以
+
+// function onGamedown(event) {
+//     // 计时
+//     if (istiming)
+//     {
+//         start();
+//         istiming = false;
+//     }
+//     if (isrunning) {
+//         event = event || window.event;
+//         var x = event.clientX - 200;
+//         var y = event.clientY - 100;
+//         // var bbox =game.getboundingclientrect();
+//         // x=x- bbox.left *(game.width / bbox.width);
+//         // y=y - bbox.top * (game.height / bbox.height);
+//         //判断点击的是哪个矩形
+//         // for (var i = 0; i < a.length; i++) {
+//         let i = down();
+//             if (a[i].y < y && a[i].y + h / 4 > y) {
+//                 //点击在了第i行
+//                 var j = Math.floor(x / (w / 4));
+//                 //将上面取整的数加1
+//                 a[i].arr[j]++;
+//                 if (a[i].arr[j] == 1) {
+//                     drawGame();
+//                     clearInterval(running);
+//                     isrunning = false;
+//                     clearInterval(times);
+//                     boxObj.innerHTML = num;
+//                     alert("点错啦！");
+//                     return;
+//                 } else if (a[i].arr[j] == 3) {
+//                     score++;
+//                     a[i].arr[j] = 2;    // 关键代码！不然一轮完就变会=灰了
+//                     move();
+//                     drawGame();
+//                     div.innerHTML = "得分：" + score;   
+//                 }
+//             }
+
+//         }
+//     }
 
 drawGame();
 
-// 1.获取节点
 var boxObj = document.querySelector('#box');
-// 2.设置变量
-// 保存定时器返回值,方便后面清空
 var times = '';
-// 保存页面中起始数据
 var num = boxObj.innerHTML;
-// 3.点击开始，实现倒计时计数
 function start() {
-    // 4.设置定时器
+    // 设置定时器
     times = setInterval(function () {
         var num1 = boxObj.innerHTML;
-        // 5.将数字减一后，返回
+        // 将数字减一后，返回
         num1--;
         boxObj.innerHTML = num1;
-        // 6.数字小于0，停止计时器，数字设置为起始数字
         if (num1 < 0) {
             clearInterval(times);
             boxObj.innerHTML = num;
