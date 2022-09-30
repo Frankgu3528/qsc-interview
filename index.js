@@ -18,6 +18,7 @@ function Rect(y, arr) {
 canvas.fillStyle = "#000000";
 //a里面放入6个Rect
 var a = new Array();
+
 for (var i = 0; i < 6; i++) {
     //每一个Rect里面要有一个y，一个arr
     var arr = new Array();
@@ -30,26 +31,27 @@ for (var i = 0; i < 6; i++) {
     a[i] = new Rect(i * 100 - 200, arr);
 }
 
-//能动的方法
-function goGame() {
-    drawGame();
-    for (var i = 0; i < a.length; i++) {
-        a[i].y++;
-        if (a[i].y > h) {
-            //出去了，就再利用
-            for (var j = 0; j < a[i].arr.length; j++) {
-                a[i].arr[j] = 0;
 
-            }
-            var n = Math.floor(Math.random() * 4);
-            a[i].arr[n] = 2;
-            //放到最上面去
-            a[i].y -= h / 4 * 6;
-            // 所以不一定最下面的一行是a[5]
-            // 而是a[5]到最下面了，就修改y让他到上面去
-        }
-    }
-}
+//能动的方法
+// function goGame() {
+//     drawGame();
+//     for (var i = 0; i < a.length; i++) {
+//         a[i].y++;
+//         if (a[i].y > h) {
+//             //出去了，就再利用
+//             for (var j = 0; j < a[i].arr.length; j++) {
+//                 a[i].arr[j] = 0;
+
+//             }
+//             var n = Math.floor(Math.random() * 4);
+//             a[i].arr[n] = 2;
+//             //放到最上面去
+//             a[i].y -= h / 4 * 6;
+//             // 所以不一定最下面的一行是a[5]
+//             // 而是a[5]到最下面了，就修改y让他到上面去
+//         }
+//     }
+// }
 
 function drawGame() {
     for (var i = 0; i < a.length; i++) {
@@ -166,7 +168,7 @@ window.onkeydown = function(e){ //event可以简写成 e
            }
 }
 
-// 下面这段代码可以实现鼠标操作，但是暂时只能在canvas在最左边的时候可以
+// 下面这段代码可以实现鼠标操作（在canvas不居中时）
 
 // function onGamedown(event) {
 //     // 计时
