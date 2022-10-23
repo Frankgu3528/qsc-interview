@@ -1,6 +1,7 @@
 # 求是潮二面试题
-[戳这里！](https://frankgu.top/qsc-intervie/)
-***
+
+**成品：** [戳这里！](https://frankgu.top/qsc-intervie/)
+
 ### Reflection
 
 > 心得体会&想说的
